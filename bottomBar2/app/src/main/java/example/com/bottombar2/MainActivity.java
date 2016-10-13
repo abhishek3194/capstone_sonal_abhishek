@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
             public void onMenuTabSelected(@IdRes int menuItemId) {
                 if(menuItemId==R.id.Bottombaritemone)
                 {
-                    homeFragment abc = new homeFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame ,abc).commit();
+
+
                 }
                 else
                 {

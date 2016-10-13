@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 
 public class profileFragment extends Fragment {
+
+    private Bundle savedState = null;
+
     //@Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,6 +32,18 @@ public class profileFragment extends Fragment {
         post.setText("18");
         noOfPosts.setText("posts");
         setHasOptionsMenu(true);
+
+
+        /* If the Fragment was destroyed inbetween (screen rotation), we need to recover the savedState first */
+        /* However, if it was not, it stays in the instance from the last onDestroyView() and we don't want to overwrite it */
+        if(savedInstanceState != null && savedState == null) {
+            savedState = savedInstanceState.getBundle("");
+        }
+        if(savedState != null) {
+            post.setText(savedState.getCharSequence(""));
+        }
+        savedState = null;
+
         return v;
     }
 
@@ -43,11 +58,13 @@ public class profileFragment extends Fragment {
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.editProfile:
 //                Intent intent = new Intent(Intent.ACTION_SEND);
                 Intent intent = new Intent(getContext(), editProfile.class);
@@ -55,30 +72,32 @@ public class profileFragment extends Fragment {
                 return true;
             case R.id.changePassword:
                 Intent intent2 = new Intent(getContext(), changePassword.class);
-//                Intent intent2 = new Intent(Intent.ACTION_SEND);
-                Log.e(intent2.toString(),"hi i am in changePassword waiting for intent");
                 startActivity(intent2);
                 return true;
             case R.id.faqs:
                 Intent intent3 = new Intent(getContext(), faqs.class);
-//                Intent intent3 = new Intent(Intent.ACTION_SEND);
                 startActivity(intent3);
                 return true;
             case R.id.termsOfService:
                 Intent intent4 = new Intent(getContext(), termsOfService.class);
-//                Intent intent4 = new Intent(Intent.ACTION_SEND);
                 startActivity(intent4);
                 return true;
             case R.id.logout:
                 Intent intent5 = new Intent(getContext(), logout.class);
-//                Intent intent5 = new Intent(Intent.ACTION_SEND);
                 startActivity(intent5);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        super.onSaveInstanceState(savedInstanceState);
 
     }
+
 
 
     }
