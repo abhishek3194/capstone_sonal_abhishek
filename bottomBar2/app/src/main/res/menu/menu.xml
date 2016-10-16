@@ -9,7 +9,7 @@
     </item>
 
     <item android:id="@+id/Bottombaritemtwo"
-        android:icon="@drawable/camera"
+        android:icon="@drawable/upload"
         android:title="Upload">
     </item>
 

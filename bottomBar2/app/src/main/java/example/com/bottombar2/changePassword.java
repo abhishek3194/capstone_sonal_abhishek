@@ -55,8 +55,8 @@ public class changePassword extends AppCompatActivity {
                         Log.e("changePasssword","password changed");
                         Toast.makeText(changePassword.this , "Password Changed" ,Toast.LENGTH_SHORT ).show();
 
-                        profileFragment fragmentS1 = new profileFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.changePassword, fragmentS1).commit();
+//                        profileFragment fragmentS1 = new profileFragment();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.changePassword, fragmentS1).commit();
 
 
 //                        Intent i = new Intent(changePassword.this,profileFragment.class);

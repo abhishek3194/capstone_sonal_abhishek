@@ -1,7 +1,13 @@
 package example.com.bottombar2;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -26,9 +34,11 @@ public class profileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View v = inflater.inflate(R.layout.profile , container , false);
-        TextView post =(TextView) v.findViewById(R.id.posts);
-        TextView noOfPosts =(TextView) v.findViewById(R.id.noOfPosts);
+        View v = inflater.inflate(R.layout.profile, container, false);
+        TextView post = (TextView) v.findViewById(R.id.posts);
+        TextView noOfPosts = (TextView) v.findViewById(R.id.noOfPosts);
+
+
         post.setText("18");
         noOfPosts.setText("posts");
         setHasOptionsMenu(true);
@@ -36,16 +46,17 @@ public class profileFragment extends Fragment {
 
         /* If the Fragment was destroyed inbetween (screen rotation), we need to recover the savedState first */
         /* However, if it was not, it stays in the instance from the last onDestroyView() and we don't want to overwrite it */
-        if(savedInstanceState != null && savedState == null) {
+        if (savedInstanceState != null && savedState == null) {
             savedState = savedInstanceState.getBundle("");
         }
-        if(savedState != null) {
+        if (savedState != null) {
             post.setText(savedState.getCharSequence(""));
         }
         savedState = null;
 
         return v;
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -54,17 +65,17 @@ public class profileFragment extends Fragment {
         inflater.inflate(R.menu.profilemenu, menu);
         super.onCreateOptionsMenu(menu, inflater);
 //        return true;
+
+
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.editProfile:
 //                Intent intent = new Intent(Intent.ACTION_SEND);
                 Intent intent = new Intent(getContext(), editProfile.class);
@@ -86,18 +97,9 @@ public class profileFragment extends Fragment {
                 Intent intent5 = new Intent(getContext(), logout.class);
                 startActivity(intent5);
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState)
-    {
-        super.onSaveInstanceState(savedInstanceState);
-
-    }
-
-
-
-    }
+}

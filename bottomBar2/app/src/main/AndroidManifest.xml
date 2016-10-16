@@ -19,7 +19,8 @@
         <activity android:name=".faqs" />
         <activity android:name=".changePassword" />
         <activity android:name=".termsOfService" />
-        <activity android:name=".logout"></activity>
+        <activity android:name=".logout" />
+        <activity android:name=".zoomingPhoto"></activity>
     </application>
 
 </manifest>
