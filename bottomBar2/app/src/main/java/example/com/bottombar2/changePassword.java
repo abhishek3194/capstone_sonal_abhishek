@@ -24,6 +24,11 @@ public class changePassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
+        getSupportActionBar().setTitle("Change Passsword");
+        //Adding Back button
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         final Button button = (Button) findViewById(R.id.change_password);
         assert button != null;
         oldPassword      =  (EditText) findViewById(R.id.old_password);
@@ -43,28 +48,21 @@ public class changePassword extends AppCompatActivity {
 
                 if(oldPassString.matches("") || newPassString.matches("") || conPassString.matches(""))
                 {
-                    Log.e("changePasssword","Empty fileds");
                     Toast.makeText(changePassword.this , "All fileds mandatory" ,Toast.LENGTH_SHORT ).show();
                 }
-                // Add code to check that old password is same from the dabatabse
+                // todo Add code to check that old password is same from the dabatabse
                 else
                 {
-                    Log.e("changePasssword","fields filled");
                     if(newPassString.matches(conPassString))
                     {
-                        Log.e("changePasssword","password changed");
                         Toast.makeText(changePassword.this , "Password Changed" ,Toast.LENGTH_SHORT ).show();
 
-//                        profileFragment fragmentS1 = new profileFragment();
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.changePassword, fragmentS1).commit();
-
-
-//                        Intent i = new Intent(changePassword.this,profileFragment.class);
-//                        startActivity(i);
+                        Intent intent = new Intent(changePassword.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                     else
                     {
-                        Log.e("changePasssword","password mismatch");
                         Toast.makeText(changePassword.this , "New Password Fields Mismatch" ,Toast.LENGTH_SHORT ).show();
                     }
                 }
@@ -72,6 +70,8 @@ public class changePassword extends AppCompatActivity {
             }
         });
     }
+
+
 
 }
 

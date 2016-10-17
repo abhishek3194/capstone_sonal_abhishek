@@ -1,5 +1,6 @@
 package example.com.bottombar2;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("Click For Change");
         mBottomBar = BottomBar.attach(this,savedInstanceState);
         mBottomBar.setItemsFromMenu(R.menu.menu, new OnMenuTabClickListener() {
             @Override
@@ -85,5 +87,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    public void openEditProfile(View view)
+    {
+        Intent intent = new Intent(this, editProfile.class);
+        startActivity(intent);
+    }
 }

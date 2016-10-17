@@ -4,14 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.ActionBar;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class editProfile extends AppCompatActivity {
 
@@ -25,22 +29,89 @@ public class editProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zooming_photo);
+        setContentView(R.layout.activity_edit_profile);
+
+        getSupportActionBar().setTitle("Edit Profile");
+        //Adding Back button
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // Hook up clicks on the thumbnail views.
 
         final View thumb1View = findViewById(R.id.thumb_button);
+        assert thumb1View != null;
         thumb1View.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(thumb1View, R.drawable.pic);
+                public void onClick(View v) {
+                    //Creating the instance of PopupMenu
+                    PopupMenu popup = new PopupMenu(editProfile.this, thumb1View);
+                    //Inflating the Popup using xml file
+                    popup.getMenuInflater().inflate(R.menu.profile_picture, popup.getMenu());
+
+                    //registering popup with OnMenuItemClickListener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item)
+                        {
+                            if(item.getTitle().toString().matches("View Profile Picture"))
+                            {
+                                zoomImageFromThumb(thumb1View, R.drawable.pic);
+                            }
+                            if(item.getTitle().toString().matches("Change Profile Picture"))
+                            {
+                                Toast.makeText(editProfile.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+                            }
+                            if(item.getTitle().toString().matches("Remove Profile Picture"))
+                            {
+                                Toast.makeText(editProfile.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+                            }
+
+                            return true;
+                        }
+                    });
+
+                popup.show();//showing popup menu
+                mShortAnimationDuration = getResources().getInteger(
+                        android.R.integer.config_shortAnimTime);
             }
-        });
+
+        });//closing the setOnClickListener method
+    }
+
+//    zoomImageFromThumb(thumb1View, R.drawable.pic);
+//            }
+//        });
 
         // Retrieve and cache the system's default "short" animation time.
-        mShortAnimationDuration = getResources().getInteger(
-                android.R.integer.config_shortAnimTime);
+
+
+
+
+
+
+
+
+
+// On clicking back button going to home
+    //// TODO: 16-10-2016 change this to profile fragment 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+
+
+        }
     }
+
+
     private void zoomImageFromThumb(final View thumbView, int imageResId) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
